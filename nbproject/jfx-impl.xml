@@ -117,14 +117,14 @@
             <and>
                 <not><isset property="active.platform.home.java.executable"/></not>
                 <or>
-                    <available file="${java.home}${file.separator}${file.separator}bin${file.separator}java"/>
-                    <available file="${java.home}${file.separator}${file.separator}bin${file.separator}java.exe"/>
+                    <available file="${java.home}${file.separator}..${file.separator}bin${file.separator}java"/>
+                    <available file="${java.home}${file.separator}..${file.separator}bin${file.separator}java.exe"/>
                 </or>
             </and>
         </condition>
     </target>
     <target name="-set-platform-home-probjdk-java" depends="-set-platform-home-java,-check-platform-home-probjdk-java" if="do.set.platform.home.probjdk.java">
-        <property name="active.platform.home.java.executable" value="${java.home}${file.separator}${file.separator}bin${file.separator}java"/>
+        <property name="active.platform.home.java.executable" value="${java.home}${file.separator}..${file.separator}bin${file.separator}java"/>
     </target>
     <target name="-check-platform-home-envjdk-java" unless="active.platform.home.java.executable">
         <property environment="env"/>
@@ -359,7 +359,7 @@
     </target>
     <target name="-check-ant-javafx-in-probjdk-lib" unless="ant-javafx.jar.location">
         <condition property="do.set.ant-javafx.in.probjdk.lib.has_jre">
-            <available file="${java.home}${file.separator}${file.separator}lib${file.separator}ant-javafx.jar"/>
+            <available file="${java.home}${file.separator}..${file.separator}lib${file.separator}ant-javafx.jar"/>
         </condition>
         <condition property="do.set.ant-javafx.in.probjdk.lib.no_jre">
             <available file="${java.home}${file.separator}lib${file.separator}ant-javafx.jar"/>
@@ -375,7 +375,7 @@
         </condition>
     </target>
     <target name="-set-ant-javafx-in-probjdk-lib" depends="-set-ant-javafx-in-platform-home-tools,-check-ant-javafx-in-probjdk-lib" if="do.set.ant-javafx.in.probjdk.lib">
-        <condition property="ant-javafx.jar.location" value="${java.home}${file.separator}${file.separator}lib${file.separator}ant-javafx.jar" else="${java.home}${file.separator}lib${file.separator}ant-javafx.jar">
+        <condition property="ant-javafx.jar.location" value="${java.home}${file.separator}..${file.separator}lib${file.separator}ant-javafx.jar" else="${java.home}${file.separator}lib${file.separator}ant-javafx.jar">
             <isset property="do.set.ant-javafx.in.probjdk.lib.has_jre"/>
         </condition>
     </target>
@@ -3546,9 +3546,6 @@
     <target name="jfx-build-noscript" depends="-set-fallback-no-javascript, -jfx-do-compile, -jfx-do-jar, -jfx-do-post-jar"/>
     
     <target name="jfx-rebuild">
-        <echo message="platform.home = ${platform.home}" level="verbose"/>
-        <echo message="java.home = ${java.home}" level="verbose"/>
-        <echo message="ant.rerun = ${ant.rerun}" level="verbose"/>
         <antcall target="-rebuild-on-another-platform" />
         <antcall target="-rebuild-on-same-platform" />
     </target>
