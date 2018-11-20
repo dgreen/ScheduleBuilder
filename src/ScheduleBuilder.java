@@ -2,7 +2,7 @@
  * File: ScheduleBuilder.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
- * Vers: 1.0.0 11/18/2018 dgg - initial coding
+ * Vers: 1.0.0 11/19/2018 dgg - initial coding
  */
 
 import javafx.application.Application;
@@ -25,12 +25,23 @@ import javafx.stage.Stage;
  */
 public class ScheduleBuilder extends Application {
 
+    private final static double BUTTON_WIDTH = 120;
 
-private final static double BUTTON_WIDTH = 120;    
+    private Dispatch dispatch;
 
-@Override
-public void start(Stage primaryStage) {
+    private TextField pathField;
+    private TextField courseField;
+    private TextField semesterField;
+    
+    private String path;
+    private String course;
+    private String semester;
+    
+    @Override
+    public void start(Stage primaryStage) {
         
+        dispatch = new Dispatch();
+
         primaryStage.setTitle("Schedule Builder");
 
         // Configuration Section
@@ -39,9 +50,11 @@ public void start(Stage primaryStage) {
         Label courseLabel   = new Label("Course");
         Label semesterLabel = new Label("Semester");
         
-        TextField pathField     = new TextField();
-        TextField courseField   = new TextField();
-        TextField semesterField = new TextField();
+        // fill in values for early test
+        // TBD: remove
+        pathField     = new TextField("/Users/dgreen/Dropbox");
+        courseField   = new TextField("333");
+        semesterField = new TextField("2018-4Fallx");
         
         GridPane configGrid = new GridPane();
         configGrid.add(pathLabel,     0, 0);
@@ -113,6 +126,18 @@ public void start(Stage primaryStage) {
         grid.setHgap(10);
         grid.setVgap(10);
 
+        // Map button actions to GUI methods (which generally dispatch to
+        // Dispatch behaviors
+        
+        createEditButton.setOnAction(event -> createEditClicked());
+        editTemplateButton.setOnAction(event -> editTemplateClicked());
+        mergeButton.setOnAction(event -> mergeClicked());
+        touchUpButton.setOnAction(event -> touchUpClicked());
+        viewButton.setOnAction(event -> viewClicked());
+        exportHTMLButton.setOnAction(event -> exportHTMLClicked());
+
+        
+        
         BorderPane borderPane = new BorderPane();
         
         borderPane.setTop(configGrid);
@@ -120,15 +145,6 @@ public void start(Stage primaryStage) {
         borderPane.setBottom(new Label("  Version 1.0 (20181118)         David G. Green <DGreen@uab.edu>  "));
         
         Scene scene = new Scene(borderPane);
-
-
-//        btn.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event) {
-//                System.out.println("Hello World!");
-//            }
-//        });
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -141,4 +157,71 @@ public void start(Stage primaryStage) {
         launch(args);
     }
 
+    /**
+     * GUI side of action associated with Create/Edit button click
+     * Set up config info and call code in dispatch.
+     * TBD: update GUI State
+     */
+    public void createEditClicked() {
+        copyConfigInfo();                           // ensure it is current
+        dispatch.createEditSchedule(path, course, semester);
+    }
+
+    /**
+     * GUI side of action associated with Edit Template button click
+     * Set up config info and call code in dispatch.
+     * TBD: update GUI State
+     */
+    public void editTemplateClicked() {
+        copyConfigInfo();                           // ensure it is current
+        dispatch.editTemplate(path, course, semester);
+    }
+
+    /**
+     * GUI side of action associated with Merge button click
+     * Set up config info and call code in dispatch.
+     * TBD: update GUI State
+     */
+    public void mergeClicked() {
+        copyConfigInfo();                           // ensure it is current
+        dispatch.mergeSchedule(path, course, semester);
+    }
+    
+    /**
+     * GUI side of action associated with Touch Up button click
+     * Set up config info and call code in dispatch.
+     * TBD: update GUI State
+     */
+    public void touchUpClicked() {
+        copyConfigInfo();                           // ensure it is current
+        dispatch.touchUpResult(path, course, semester);        
+    }
+    
+    /**
+     * GUI side of action associated with View button click
+     * Set up config info and call code in dispatch.
+     * TBD: update GUI State
+     */
+    public void viewClicked() {
+        copyConfigInfo();                           // ensure it is current
+        dispatch.viewResult(path, course, semester);        
+    }
+    
+    /**
+     * GUI side of action associated with Export HTML button click
+     * Set up config info and call code in dispatch.
+     * TBD: update GUI State
+     */
+    public void exportHTMLClicked() {
+        copyConfigInfo();                           // ensure it is current
+        dispatch.exportResult(path, course, semester);                
+    }
+
+    // Copy the config out of text fields into private String variables
+    private void copyConfigInfo() {
+        path     = pathField.getText();
+        course   = courseField.getText();
+        semester = semesterField.getText();
+    }
+    
 }
