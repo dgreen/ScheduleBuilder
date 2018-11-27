@@ -2,7 +2,7 @@
  * File: ScheduleBuilder.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
- * Vers: 1.1.0 11/26/2018 dgg - prevent resizing
+ * Vers: 1.1.0 11/26/2018 dgg - prevent resizing, add button enabling
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
  */
 
@@ -33,7 +33,14 @@ public class ScheduleBuilder extends Application {
     private TextField pathField;
     private TextField courseField;
     private TextField semesterField;
-    
+
+    Button createEditButton;
+    Button editTemplateButton;
+    Button mergeButton;
+    Button touchUpButton;
+    Button viewButton;
+    Button exportHTMLButton;
+
     private String path;
     private String course;
     private String semester;
@@ -70,16 +77,15 @@ public class ScheduleBuilder extends Application {
         configGrid.setPadding(new Insets(25, 25, 25, 25));
         configGrid.setHgap(10);
         configGrid.setVgap(10);
-
-        
+       
         // Work Flow Section
         
-        Button createEditButton    = new Button("Create/Edit");
-        Button editTemplateButton  = new Button("Edit Template");
-        Button mergeButton         = new Button("Merge");
-        Button touchUpButton       = new Button("Touch Up");
-        Button viewButton          = new Button("View");
-        Button exportHTMLButton    = new Button("Export HTML");
+        createEditButton           = new Button("Create/Edit");
+        editTemplateButton         = new Button("Edit Template");
+        mergeButton                = new Button("Merge");
+        touchUpButton              = new Button("Touch Up");
+        viewButton                 = new Button("View");
+        exportHTMLButton           = new Button("Export HTML");
         
         Label createEditLabel      = new Label("Create or modify schedule in \r\n" +
                                                "in Spreadsheet.  Export CSV");
@@ -137,18 +143,20 @@ public class ScheduleBuilder extends Application {
         viewButton.setOnAction(event -> viewClicked());
         exportHTMLButton.setOnAction(event -> exportHTMLClicked());
 
-        
+        enableReadyButtons();
         
         BorderPane borderPane = new BorderPane();
         
         borderPane.setTop(configGrid);
         borderPane.setCenter(grid);
-        borderPane.setBottom(new Label("  Version 1.0 (20181118)         David G. Green <DGreen@uab.edu>  "));
+        borderPane.setBottom(new Label("  Version 1.0 (20181124)         David G. Green <DGreen@uab.edu>  "));
         
         Scene scene = new Scene(borderPane);
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);       // don't allow resize
+        primaryStage.focusedProperty().addListener(
+                (observable, oldValue, newValue) -> { enableReadyButtons(); } );
         primaryStage.show();
     }
 
@@ -160,13 +168,27 @@ public class ScheduleBuilder extends Application {
     }
 
     /**
+     * Update which buttons are enabled based on the state of the system
+     */
+    public void enableReadyButtons() {
+        copyConfigInfo();
+        createEditButton.setDisable(  ! dispatch.readyForCreateEdit());
+        editTemplateButton.setDisable(! dispatch.readyForEditTemplate());
+        mergeButton.setDisable(       ! dispatch.readyForMerge());
+        touchUpButton.setDisable(     ! dispatch.readyForTouchUp());
+        viewButton.setDisable(        ! dispatch.readyForView());
+        exportHTMLButton.setDisable(  ! dispatch.readyForExport());
+    }
+    
+    /**
      * GUI side of action associated with Create/Edit button click
      * Set up config info and call code in dispatch.
      * TBD: update GUI State
      */
     public void createEditClicked() {
         copyConfigInfo();                           // ensure it is current
-        dispatch.createEditSchedule(path, course, semester);
+        dispatch.createEditSchedule();
+        enableReadyButtons();
     }
 
     /**
@@ -176,7 +198,8 @@ public class ScheduleBuilder extends Application {
      */
     public void editTemplateClicked() {
         copyConfigInfo();                           // ensure it is current
-        dispatch.editTemplate(path, course, semester);
+        dispatch.editTemplate();
+        enableReadyButtons();
     }
 
     /**
@@ -186,7 +209,8 @@ public class ScheduleBuilder extends Application {
      */
     public void mergeClicked() {
         copyConfigInfo();                           // ensure it is current
-        dispatch.mergeSchedule(path, course, semester);
+        dispatch.mergeSchedule();
+        enableReadyButtons();
     }
     
     /**
@@ -196,7 +220,8 @@ public class ScheduleBuilder extends Application {
      */
     public void touchUpClicked() {
         copyConfigInfo();                           // ensure it is current
-        dispatch.touchUpResult(path, course, semester);        
+        dispatch.touchUpResult();        
+        enableReadyButtons();
     }
     
     /**
@@ -206,7 +231,8 @@ public class ScheduleBuilder extends Application {
      */
     public void viewClicked() {
         copyConfigInfo();                           // ensure it is current
-        dispatch.viewResult(path, course, semester);        
+        dispatch.viewResult();        
+        enableReadyButtons();
     }
     
     /**
@@ -216,14 +242,17 @@ public class ScheduleBuilder extends Application {
      */
     public void exportHTMLClicked() {
         copyConfigInfo();                           // ensure it is current
-        dispatch.exportResult(path, course, semester);                
+        dispatch.exportResult();
+        enableReadyButtons();
     }
 
     // Copy the config out of text fields into private String variables
+    // and convey this info to the dispatch object
     private void copyConfigInfo() {
         path     = pathField.getText();
         course   = courseField.getText();
         semester = semesterField.getText();
+        dispatch.setFullPath(path, course, semester);
     }
     
 }
