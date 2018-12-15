@@ -91,7 +91,7 @@ public class Dispatch {
      * Merge the CSV from the spreadsheet into the Template replacing any exising
      * old schedule
      * Assumes fullPath has been set prior to execution.
-     * @return String representation of result     * @return
+     * @return String representation of result
      */
     public String mergeSchedule() {
         
