@@ -1,3 +1,5 @@
+package edu.uab.dgreen.ee333;
+
 /*
  * File: ScheduleBuilder.java
  * Author: David Green DGreen@uab.edu
@@ -6,6 +8,7 @@
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
  */
 
+import edu.uab.dgreen.ee333.Dispatch;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
