@@ -10,8 +10,6 @@ package edu.uab.dgreen.ee333;
 
 import edu.uab.dgreen.ee333.Dispatch;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -152,10 +151,12 @@ public class ScheduleBuilder extends Application {
         
         borderPane.setTop(configGrid);
         borderPane.setCenter(grid);
-        borderPane.setBottom(new Label("  Version 1.0 (20181124)         David G. Green <DGreen@uab.edu>  "));
+        borderPane.setBottom(new Label("  Version 1.1 (20190416)         David G. Green <DGreen@uab.edu>  "));
         
         Scene scene = new Scene(borderPane);
 
+        primaryStage.getIcons()
+                    .add(new Image("file:resources/icon-128-128.png"));
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);       // don't allow resize
         primaryStage.focusedProperty().addListener(

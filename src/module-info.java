@@ -24,6 +24,7 @@
 
 module ScheduleBuilder {
     requires java.logging;
+    requires java.desktop;
     requires javafx.controls;     // controls implicitly requires base and graphics
     exports edu.uab.dgreen.ee333;
 }
