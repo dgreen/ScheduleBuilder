@@ -1,17 +1,19 @@
-package edu.uab.dgreen.ee333;
-
 /*
  * File: Dispatch.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
+ * Vers: 1.2.0 10/09/2019 dgg - convert to Maven with JavaFx
  * Vers: 1.1.0 11/24/2018 dgg - refactor, test file statuses
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
  */
+
+package edu.uab.dgreen.schedulebuilder;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -50,11 +52,16 @@ public class Dispatch {
             String spreadSheetName = "schedule.numbers";        
             File schedule          = new File(fullPath + "/" + spreadSheetName);
             
+//            System.out.println("Debugging");
+//            Path path = (new File("resources/schedule-template.numbers")).toPath();
+//            Logger.getLogger(Dispatch.class.getName()).log(Level.SEVERE, null, path);
+//            System.out.println(path.toString());
+            
             if (! schedule.exists()) {
                 Files.copy((new File("resources/schedule-template.numbers")).toPath(), 
                             new File(fullPath + "/" + spreadSheetName).toPath(), 
                            COPY_ATTRIBUTES);
-                schedule = new File(fullPath + "/" + spreadSheetName);
+                // schedule = new File(fullPath + "/" + spreadSheetName);
             }
             
             Runtime rt = Runtime.getRuntime();

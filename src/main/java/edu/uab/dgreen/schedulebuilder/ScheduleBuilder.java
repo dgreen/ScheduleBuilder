@@ -1,14 +1,14 @@
-package edu.uab.dgreen.ee333;
-
 /*
  * File: ScheduleBuilder.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
+ * Vers: 1.2.0 10/09/2019 dgg - convert to Maven with JavaFx
  * Vers: 1.1.0 11/26/2018 dgg - prevent resizing, add button enabling
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
  */
 
-import edu.uab.dgreen.ee333.Dispatch;
+package edu.uab.dgreen.schedulebuilder;
+
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -151,7 +151,7 @@ public class ScheduleBuilder extends Application {
         
         borderPane.setTop(configGrid);
         borderPane.setCenter(grid);
-        borderPane.setBottom(new Label("  Version 1.1 (20190416)         David G. Green <DGreen@uab.edu>  "));
+        borderPane.setBottom(new Label("  Version 1.2 (20191009)         David G. Green <DGreen@uab.edu>  "));
         
         Scene scene = new Scene(borderPane);
 
