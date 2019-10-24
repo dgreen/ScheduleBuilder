@@ -2,6 +2,7 @@
  * File: ScheduleBuilder.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
+ * Vers: 1.3.0 10/24/2019 dgg - add window focus detection
  * Vers: 1.2.0 10/09/2019 dgg - convert to Maven with JavaFx
  * Vers: 1.1.0 11/26/2018 dgg - prevent resizing, add button enabling
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
@@ -10,6 +11,7 @@
 package edu.uab.dgreen.schedulebuilder;
 
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -162,6 +164,15 @@ public class ScheduleBuilder extends Application {
         primaryStage.focusedProperty().addListener(
                 (observable, oldValue, newValue) -> { enableReadyButtons(); } );
         primaryStage.show();
+        
+        // Register listener to watch for stage regaining focus, when it happens
+        // review which buttons should be enabled
+        primaryStage.focusedProperty().addListener( (ObservableValue<? extends Boolean> obj,Boolean oldVal,Boolean newVal) -> {
+        if (newVal) { // The window has gained focus.
+            enableReadyButtons();
+        }
+    });
+
     }
 
     /**

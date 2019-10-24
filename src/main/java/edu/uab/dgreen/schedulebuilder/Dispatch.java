@@ -2,6 +2,7 @@
  * File: Dispatch.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
+ * Vers: 1.2.1 10/24/2019 dgg - reduce time delays now that window focus is detected
  * Vers: 1.2.0 10/09/2019 dgg - convert to Maven with JavaFx
  * Vers: 1.1.0 11/24/2018 dgg - refactor, test file statuses
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
@@ -67,7 +68,7 @@ public class Dispatch {
             Runtime rt = Runtime.getRuntime();
             Process p = rt.exec( "open " + spreadSheetName, (String[]) null, new File(fullPath) );
 
-            Thread.sleep(10000);
+            Thread.sleep(500);
             
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Dispatch.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,7 +89,7 @@ public class Dispatch {
             Runtime rt = Runtime.getRuntime();
             Process p = rt.exec( "open schedule.md", (String[]) null, new File(fullPath) );
 
-            Thread.sleep(10000);
+            Thread.sleep(500);
             
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Dispatch.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,7 +153,7 @@ public class Dispatch {
             Runtime rt = Runtime.getRuntime();
             Process p = rt.exec( "open schedule.md", (String[]) null, new File(fullPath) );
 
-            Thread.sleep(10000);
+            Thread.sleep(500);
             
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Dispatch.class.getName()).log(Level.SEVERE, null, ex);
@@ -173,7 +174,7 @@ public class Dispatch {
             Runtime rt = Runtime.getRuntime();
             Process p = rt.exec( "open schedule.md -a Marked.app", (String[]) null, new File(fullPath) );
 
-            Thread.sleep(10000);
+            Thread.sleep(500);
             
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Dispatch.class.getName()).log(Level.SEVERE, null, ex);
