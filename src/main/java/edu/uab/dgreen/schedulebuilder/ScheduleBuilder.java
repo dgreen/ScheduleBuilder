@@ -2,7 +2,7 @@
  * File: ScheduleBuilder.java
  * Author: David Green DGreen@uab.edu
  * Assignment:  ScheduleBuilder - EE333 Fall 2018
- * Vers: 1.3.0 10/24/2019 dgg - add window focus detection
+ * Vers: 1.3.1 10/24/2019 dgg - add window focus detection
  * Vers: 1.2.0 10/09/2019 dgg - convert to Maven with JavaFx
  * Vers: 1.1.0 11/26/2018 dgg - prevent resizing, add button enabling
  * Vers: 1.0.0 11/19/2018 dgg - initial coding
@@ -25,7 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- *
+ * The Application class for ScheduleBuilder - non-FXML version
  * @author David Green DGreen@uab.edu
  */
 public class ScheduleBuilder extends Application {
@@ -49,6 +49,11 @@ public class ScheduleBuilder extends Application {
     private String course;
     private String semester;
     
+    
+    /**
+     * Build and Launch the GUI
+     * @param primaryStage - where to show the GUI
+     */
     @Override
     public void start(Stage primaryStage) {
         
@@ -69,6 +74,7 @@ public class ScheduleBuilder extends Application {
         semesterField = new TextField("2018-4Fallx");
         
         GridPane configGrid = new GridPane();
+        //             object       col row
         configGrid.add(pathLabel,     0, 0);
         configGrid.add(pathField,     1, 0);
         configGrid.add(courseLabel,   0, 1);
@@ -115,6 +121,7 @@ public class ScheduleBuilder extends Application {
         grid.setPadding(new Insets(25, 25, 25, 25));
         grid.setHgap(10);
         grid.setVgap(10);
+        //       object             col row
         grid.add(new Label("1."),    0, 0);
         grid.add(createEditButton,   1, 0);
         grid.add(createEditLabel,    2, 0);
@@ -153,7 +160,7 @@ public class ScheduleBuilder extends Application {
         
         borderPane.setTop(configGrid);
         borderPane.setCenter(grid);
-        borderPane.setBottom(new Label("  Version 1.2 (20191009)         David G. Green <DGreen@uab.edu>  "));
+        borderPane.setBottom(new Label("  Version 1.3 (20191024)         David G. Green <DGreen@uab.edu>  "));
         
         Scene scene = new Scene(borderPane);
 
@@ -176,6 +183,7 @@ public class ScheduleBuilder extends Application {
     }
 
     /**
+     * Start here, launch (in side Application super class)
      * @param args the command line arguments
      */
     public static void main(String[] args) {
